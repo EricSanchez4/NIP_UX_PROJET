@@ -9,8 +9,8 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN,
-    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    origin: "*",
+    methods: "GET,PATCH,POST,PUT,DELETE,OPTIONS",
     credentials: true,
     allowedHeaders:
       "Content-Type, Authorization, X-Requested-With, Accept, xsrf-token",
@@ -24,7 +24,7 @@ app.listen(port, (err) => {
   if (err) {
     console.log("Error");
   } else {
-    console.log(`Server is running on port: ${port} enjoy your ride !!`);
+    console.log(`Server is running on port: ${port}`);
   }
 });
 
@@ -32,7 +32,7 @@ app.listen(port, (err) => {
 app.get("/", (req, res) => {
   res
     .status(200)
-    .json({ message: "Hello Welcome to our API enjoy your ride !" });
+    .json({ message: "Hello Welcome to our API!" });
 });
 
 //get all users
@@ -45,6 +45,7 @@ app.get("/api/users/", async (req, res) => {
   }
 });
 
+//Find
 app.get("/api/users/:id", async (req, res) => {
   const { id } = req.params;
   const sql = "SELECT * FROM users WHERE id=?";
@@ -76,7 +77,8 @@ app.post("/api/users/", async (req, res) => {
   }
 });
 
-app.put("/api/users/:id", async (req, res) => {
+// UPDATE
+app.patch("/api/users/:id", async (req, res) => {
   const { id } = req.params;
   const { firstname, lastname, email, user_password } = req.body;
 
